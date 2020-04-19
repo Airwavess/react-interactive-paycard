@@ -1,6 +1,7 @@
 {
   "name": "react-interactive-paycard",
   "version": "0.1.0",
+  "license": "MIT",
   "private": true,
   "homepage": "http://airwavess.github.io/react-interactive-paycard",
   "dependencies": {

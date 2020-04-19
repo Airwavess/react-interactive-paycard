@@ -7,6 +7,12 @@
   margin-bottom: -130px;
   display: flex;
   flex-direction: column;
+  transition: transform 0.8s cubic-bezier(0.71, 0.03, 0.56, 0.85);
+  transform-style: preserve-3d;
+
+  &--is-flipped {
+    transform: rotateY(180deg);
+  }
 
   &__front,
   &__back {
@@ -16,14 +22,6 @@
     display: flex;
     align-content: space-between;
     flex-direction: column;
-    transition: all 0.8s cubic-bezier(0.71, 0.03, 0.56, 0.85);
-    transform: rotateY(180deg) rotateX(0deg) rotateZ(0deg);
-    z-index: 2;
-
-    &--active {
-      transform: rotateY(0deg) rotateX(0deg) rotateZ(0deg);
-      z-index: 3;
-    }
   }
 
   &__background {
@@ -126,6 +124,7 @@
   }
 
   &__back {
+    transform: rotateY(180deg);
     .card__top,
     .card__card-cvv,
     .card__bottom {

@@ -35,12 +35,8 @@ const Card: React.FC<CardProps> = ({ cardSide, ...props }) => {
   );
 
   return (
-    <div className="card">
-      <div
-        className={`card__front ${
-          cardSide === "front" ? "card__front--active" : ""
-        }`}
-      >
+    <div className={`card ${cardSide === "back" && "card--is-flipped"}`}>
+      <div className="card__front">
         <div className="card__background">
           <img src="https://i.imgur.com/5XHCjPT.jpg" alt="" />
         </div>
@@ -66,11 +62,7 @@ const Card: React.FC<CardProps> = ({ cardSide, ...props }) => {
           </div>
         </div>
       </div>
-      <div
-        className={`card__back ${
-          cardSide === "back" ? "card__back--active" : ""
-        }`}
-      >
+      <div className="card__back">
         <div className="card__background">
           <img src="https://i.imgur.com/5XHCjPT.jpg" alt="" />
         </div>
