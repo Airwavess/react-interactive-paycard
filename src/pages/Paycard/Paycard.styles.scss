@@ -1,0 +1,15 @@
+.paycard {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "Source Code Pro", monospace;
+
+  &:focus {
+    outline: none;
+  }
+}
