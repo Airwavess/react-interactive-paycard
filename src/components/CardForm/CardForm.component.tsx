@@ -5,26 +5,33 @@ import { ReducerAction, CardState } from "../../pages/Paycard/Paycard.page";
 interface CardFromProps extends CardState {
   handleRotateCard: (side: string) => void;
   dispatch: React.Dispatch<ReducerAction>;
+  handleSetFocusSection: (section: string) => void;
 }
 
 const CardForm: React.FC<CardFromProps> = ({
   handleRotateCard,
+  handleSetFocusSection,
   dispatch,
   ...props
 }) => {
   const handleUpdateCardNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.target.value;
-    const re = /^\d+$/;
-    if (newValue === "" || re.test(newValue)) {
-      dispatch({ type: "updateCardNumber", payload: e.target.value });
+    const re = /^(\d{0,4}\s?){0,4}$/;
+
+    let newCardNumber = e.target.value.trim();
+    if ([5, 10, 15].includes(newCardNumber.length)) {
+      newCardNumber =
+        newCardNumber.slice(0, -1) + " " + newCardNumber.slice(-1);
+    }
+    if (newCardNumber === "" || re.test(newCardNumber)) {
+      dispatch({ type: "updateCardNumber", payload: newCardNumber });
     }
   };
 
-  const handleUpdateCardCVV = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUpdateCardCVC = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     const re = /^\d+$/;
     if (newValue === "" || re.test(newValue)) {
-      dispatch({ type: "updateCardCVV", payload: e.target.value });
+      dispatch({ type: "updateCardCVC", payload: e.target.value });
     }
   };
 
@@ -41,10 +48,15 @@ const CardForm: React.FC<CardFromProps> = ({
             type="text"
             id="card-number"
             autoComplete="off"
-            maxLength={16}
+            maxLength={19}
             value={props.cardNumber}
             onChange={handleUpdateCardNumber}
-            onFocus={() => handleRotateCard("front")}
+            onFocus={() => {
+              handleRotateCard("front");
+              handleSetFocusSection("cc-number");
+            }}
+            onBlur={() => handleSetFocusSection("")}
+            autoFocus
           />
         </div>
         <div className="form-group">
@@ -57,7 +69,11 @@ const CardForm: React.FC<CardFromProps> = ({
             onChange={(e) => {
               dispatch({ type: "updateCardHolder", payload: e.target.value });
             }}
-            onFocus={() => handleRotateCard("front")}
+            onFocus={() => {
+              handleRotateCard("front");
+              handleSetFocusSection("cc-name");
+            }}
+            onBlur={() => handleSetFocusSection("")}
           />
         </div>
         <div className="row">
@@ -74,7 +90,11 @@ const CardForm: React.FC<CardFromProps> = ({
                     payload: e.target.value,
                   });
                 }}
-                onFocus={() => handleRotateCard("front")}
+                onFocus={() => {
+                  handleRotateCard("front");
+                  handleSetFocusSection("cc-exp");
+                }}
+                onBlur={() => handleSetFocusSection("")}
               >
                 <option disabled>Month</option>
                 {Array.from({ length: 12 }).map((_, idx) => (
@@ -91,7 +111,11 @@ const CardForm: React.FC<CardFromProps> = ({
                     payload: e.target.value,
                   });
                 }}
-                onFocus={() => handleRotateCard("front")}
+                onFocus={() => {
+                  handleRotateCard("front");
+                  handleSetFocusSection("cc-exp");
+                }}
+                onBlur={() => handleSetFocusSection("")}
               >
                 <option disabled>Year</option>
                 {Array.from({ length: 12 }).map((_, idx) => (
@@ -100,15 +124,19 @@ const CardForm: React.FC<CardFromProps> = ({
               </select>
             </div>
           </div>
-          <div className="form-group card-form__card-cvv">
-            <label htmlFor="card-cvv">CVV</label>
+          <div className="form-group card-form__card-cvC">
+            <label htmlFor="card-cvC">CVC</label>
             <input
               type="text"
-              id="card-cvv"
+              id="card-cvC"
               maxLength={3}
-              value={props.cardCVV}
-              onChange={handleUpdateCardCVV}
-              onFocus={() => handleRotateCard("back")}
+              value={props.cardCVC}
+              onChange={handleUpdateCardCVC}
+              onFocus={() => {
+                handleRotateCard("back");
+                handleSetFocusSection("cc-cvc");
+              }}
+              onBlur={() => handleSetFocusSection("")}
             />
           </div>
         </div>

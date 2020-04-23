@@ -4,24 +4,22 @@ import { CardState } from "../../pages/Paycard/Paycard.page";
 
 interface CardProps extends CardState {
   cardSide: string;
+  focusSection: string;
 }
 
 const Card: React.FC<CardProps> = ({ cardSide, ...props }) => {
   // 卡片號碼
   let cardNumberRow: Array<JSX.Element> = [];
-  Array.from({ length: 16 }).forEach((_, idx) => {
-    if (idx % 4 === 0 && idx > 0) {
+  Array.from({ length: 19 }).forEach((_, idx) => {
+    if ([4, 9, 14].includes(idx)) {
       cardNumberRow.push(
         <span className="card__card-number--space" key={`space-${idx}`}></span>
       );
+    } else {
+      const cardNumber =
+        idx < props.cardNumber.length ? props.cardNumber[idx] : "#";
+      cardNumberRow.push(<span>{cardNumber}</span>);
     }
-
-    let cardNumber = "#";
-    if (idx < props.cardNumber.length) {
-      cardNumber = props.cardNumber[idx];
-    }
-
-    cardNumberRow.push(<span key={`number-${idx}`}>{cardNumber}</span>);
   });
 
   let cardExpirationDate = "MM/YY";
@@ -34,9 +32,12 @@ const Card: React.FC<CardProps> = ({ cardSide, ...props }) => {
     props.cardExpirationYear || "YY"
   );
 
+  const focusBoxClass = `card__focus-box--${props.focusSection}`;
+
   return (
     <div className={`card ${cardSide === "back" && "card--is-flipped"}`}>
       <div className="card__front">
+        <div className={`card__focus-box ${focusBoxClass}`} />
         <div className="card__background">
           <img src="https://i.imgur.com/5XHCjPT.jpg" alt="" />
         </div>
@@ -63,15 +64,16 @@ const Card: React.FC<CardProps> = ({ cardSide, ...props }) => {
         </div>
       </div>
       <div className="card__back">
+        <div className={`card__focus-box ${focusBoxClass}`} />
         <div className="card__background">
           <img src="https://i.imgur.com/5XHCjPT.jpg" alt="" />
         </div>
         <div className="card__top">
           <div className="card__black-line"></div>
         </div>
-        <div className="card__card-cvv">
-          <div className="card__card-cvv-title">{props.cardCVV || "CVV"}</div>
-          <div className="card__card-cvv-number"></div>
+        <div className="card__card-cvc">
+          <div className="card__card-cvc-title">{props.cardCVC || "CVC"}</div>
+          <div className="card__card-cvc-number"></div>
         </div>
         <div className="card__bottom">
           <div className="card__visa-icon">

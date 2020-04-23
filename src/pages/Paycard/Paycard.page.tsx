@@ -8,7 +8,7 @@ export interface CardState {
   cardHolder: string;
   cardExpirationMonth: string;
   cardExpirationYear: string;
-  cardCVV: string;
+  cardCVC: string;
 }
 
 export interface ReducerAction {
@@ -16,18 +16,10 @@ export interface ReducerAction {
   payload: any;
 }
 
-function updateCardNumber(newCardNumber: string) {
-  if (newCardNumber.length > 16) {
-    return newCardNumber.substr(0, 16);
-  }
-
-  return newCardNumber;
-}
-
 function reducer(state: CardState, action: ReducerAction): CardState {
   switch (action.type) {
     case "updateCardNumber":
-      return { ...state, cardNumber: updateCardNumber(action.payload) };
+      return { ...state, cardNumber: action.payload };
     case "updateCardHolder":
       return { ...state, cardHolder: action.payload };
     case "updateCardExpirationMonth":
@@ -37,8 +29,8 @@ function reducer(state: CardState, action: ReducerAction): CardState {
       };
     case "updateCardExpirationYear":
       return { ...state, cardExpirationYear: action.payload.slice(2) };
-    case "updateCardCVV":
-      return { ...state, cardCVV: action.payload };
+    case "updateCardCVC":
+      return { ...state, cardCVC: action.payload };
     default:
       throw new Error();
   }
@@ -50,23 +42,37 @@ const Paycard = () => {
     cardHolder: "",
     cardExpirationMonth: "",
     cardExpirationYear: "",
-    cardCVV: "",
+    cardCVC: "",
   };
   const [cardState, dispatch] = React.useReducer(reducer, initialCardState);
 
   const [cardSide, rotateCard] = React.useState("front");
+  const [focusSection, setFocusSection] = React.useState("cc-number");
   const handleRotateCard = (side: string) => {
     rotateCard(side);
   };
 
+  const handleSetFocusSection = (section: string) => {
+    setFocusSection(section);
+  };
+
+  const cardProps = {
+    cardSide,
+    focusSection,
+    ...cardState,
+  };
+
+  const cardFormProps = {
+    handleRotateCard,
+    handleSetFocusSection,
+    dispatch,
+    ...cardState,
+  };
+
   return (
     <div className="paycard">
-      <Card cardSide={cardSide} {...cardState} />
-      <CardForm
-        handleRotateCard={handleRotateCard}
-        dispatch={dispatch}
-        {...cardState}
-      />
+      <Card {...cardProps} />
+      <CardForm {...cardFormProps} />
     </div>
   );
 };
