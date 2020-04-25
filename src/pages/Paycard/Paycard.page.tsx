@@ -45,9 +45,10 @@ const Paycard = () => {
     cardCVC: "",
   };
   const [cardState, dispatch] = React.useReducer(reducer, initialCardState);
-
   const [cardSide, rotateCard] = React.useState("front");
   const [focusSection, setFocusSection] = React.useState("cc-number");
+  const [isInputFocused, setIsInputFocused] = React.useState(true);
+
   const handleRotateCard = (side: string) => {
     rotateCard(side);
   };
@@ -56,15 +57,25 @@ const Paycard = () => {
     setFocusSection(section);
   };
 
+  const handleSetIsInputFocused = (bool: boolean) => {
+    setIsInputFocused(bool);
+  };
+
   const cardProps = {
     cardSide,
     focusSection,
+    handleSetFocusSection,
+    isInputFocused,
+    handleSetIsInputFocused,
     ...cardState,
   };
 
   const cardFormProps = {
     handleRotateCard,
+    focusSection,
     handleSetFocusSection,
+    isInputFocused,
+    handleSetIsInputFocused,
     dispatch,
     ...cardState,
   };

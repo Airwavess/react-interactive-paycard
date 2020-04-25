@@ -1,19 +1,68 @@
-import React from "react";
+import React, { useEffect, useRef, useCallback, useMemo } from "react";
 import "./CardForm.styles.scss";
 import { ReducerAction, CardState } from "../../pages/Paycard/Paycard.page";
 
 interface CardFromProps extends CardState {
   handleRotateCard: (side: string) => void;
   dispatch: React.Dispatch<ReducerAction>;
+  focusSection: string;
   handleSetFocusSection: (section: string) => void;
+  isInputFocused: boolean;
+  handleSetIsInputFocused: (bool: boolean) => void;
 }
 
 const CardForm: React.FC<CardFromProps> = ({
   handleRotateCard,
+  focusSection,
   handleSetFocusSection,
   dispatch,
+  isInputFocused,
+  handleSetIsInputFocused,
   ...props
 }) => {
+  const isInputFocusedRef = useRef(isInputFocused);
+  isInputFocusedRef.current = isInputFocused;
+
+  const ccNumberRef = useRef() as React.MutableRefObject<HTMLInputElement>;
+  const ccNameRef = useRef() as React.MutableRefObject<HTMLInputElement>;
+  const ccExpMonthRef = useRef() as React.MutableRefObject<HTMLSelectElement>;
+  const ccExpYearRef = useRef() as React.MutableRefObject<HTMLSelectElement>;
+  const ccCVCRef = useRef() as React.MutableRefObject<HTMLInputElement>;
+
+  type InputRefs = {
+    [index: string]: React.MutableRefObject<
+      HTMLInputElement | HTMLSelectElement
+    >;
+  };
+
+  const inputRefs: InputRefs = useMemo(
+    () => ({
+      ccNumberRef,
+      ccNameRef,
+      ccExpMonthRef,
+      ccExpYearRef,
+      ccCVCRef,
+    }),
+    [ccNumberRef, ccNameRef, ccExpMonthRef, ccExpYearRef, ccCVCRef]
+  );
+
+  const setInputRefFocus = useCallback(
+    (focusSection: string) => {
+      if (!focusSection) return;
+      if (focusSection === "cc-exp") focusSection = "ccExpMonth";
+      let key = focusSection.split("-")[0];
+
+      for (let i = 1; i < focusSection.split("-").length; i++) {
+        const a = focusSection.split("-")[1].substring(0, 1).toUpperCase();
+        const b = focusSection.split("-")[1].substring(1);
+        key = `${key}${a}${b}`;
+      }
+      key = `${key}Ref`;
+      inputRefs[key]?.current.focus();
+    },
+    [inputRefs]
+  );
+
   const handleUpdateCardNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
     const re = /^(\d{0,4}\s?){0,4}$/;
 
@@ -39,6 +88,19 @@ const CardForm: React.FC<CardFromProps> = ({
     e.preventDefault();
   };
 
+  useEffect(() => {
+    setInputRefFocus(focusSection);
+  }, [focusSection, setInputRefFocus]);
+
+  const handleInputBlur = () => {
+    setTimeout(() => {
+      if (!isInputFocusedRef.current) {
+        handleSetFocusSection("");
+      }
+    }, 300);
+    handleSetIsInputFocused(false);
+  };
+
   return (
     <form onSubmit={handleSubmit} className="card-form">
       <div className="form-group card-form__cc-number">
@@ -53,8 +115,12 @@ const CardForm: React.FC<CardFromProps> = ({
           onFocus={() => {
             handleRotateCard("front");
             handleSetFocusSection("cc-number");
+            handleSetIsInputFocused(true);
           }}
-          onBlur={() => handleSetFocusSection("")}
+          onBlur={handleInputBlur}
+          ref={
+            inputRefs.ccNumberRef as React.MutableRefObject<HTMLInputElement>
+          }
           autoFocus
         />
       </div>
@@ -71,8 +137,11 @@ const CardForm: React.FC<CardFromProps> = ({
           onFocus={() => {
             handleRotateCard("front");
             handleSetFocusSection("cc-name");
+            handleSetIsInputFocused(true);
           }}
-          onBlur={() => handleSetFocusSection("")}
+          onBlur={handleInputBlur}
+          autoFocus={focusSection === "cc-name"}
+          ref={inputRefs.ccNameRef as React.MutableRefObject<HTMLInputElement>}
         />
       </div>
       <div className="form-group card-form__cc-exp">
@@ -91,8 +160,14 @@ const CardForm: React.FC<CardFromProps> = ({
             onFocus={() => {
               handleRotateCard("front");
               handleSetFocusSection("cc-exp");
+              handleSetIsInputFocused(true);
             }}
-            onBlur={() => handleSetFocusSection("")}
+            onBlur={handleInputBlur}
+            ref={
+              inputRefs.ccExpMonthRef as React.MutableRefObject<
+                HTMLSelectElement
+              >
+            }
           >
             <option disabled>Month</option>
             {Array.from({ length: 12 }).map((_, idx) => (
@@ -112,8 +187,14 @@ const CardForm: React.FC<CardFromProps> = ({
             onFocus={() => {
               handleRotateCard("front");
               handleSetFocusSection("cc-exp");
+              handleSetIsInputFocused(true);
             }}
-            onBlur={() => handleSetFocusSection("")}
+            onBlur={handleInputBlur}
+            ref={
+              inputRefs.ccExpYearRef as React.MutableRefObject<
+                HTMLSelectElement
+              >
+            }
           >
             <option disabled>Year</option>
             {Array.from({ length: 12 }).map((_, idx) => (
@@ -123,7 +204,7 @@ const CardForm: React.FC<CardFromProps> = ({
         </div>
       </div>
       <div className="form-group card-form__cc-cvc">
-        <label htmlFor="card-cvC">CVC</label>
+        <label htmlFor="card-cvc">CVC</label>
         <input
           type="text"
           id="card-cvc"
@@ -133,8 +214,10 @@ const CardForm: React.FC<CardFromProps> = ({
           onFocus={() => {
             handleRotateCard("back");
             handleSetFocusSection("cc-cvc");
+            handleSetIsInputFocused(true);
           }}
-          onBlur={() => handleSetFocusSection("")}
+          onBlur={handleInputBlur}
+          ref={inputRefs.ccCVCRef as React.MutableRefObject<HTMLInputElement>}
         />
       </div>
       <button type="submit" className="card-form__submit-btn">

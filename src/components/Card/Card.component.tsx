@@ -5,9 +5,17 @@ import { CardState } from "../../pages/Paycard/Paycard.page";
 interface CardProps extends CardState {
   cardSide: string;
   focusSection: string;
+  handleSetFocusSection: (section: string) => void;
+  isInputFocused: boolean;
+  handleSetIsInputFocused: (bool: boolean) => void;
 }
 
-const Card: React.FC<CardProps> = ({ cardSide, ...props }) => {
+const Card: React.FC<CardProps> = ({
+  cardSide,
+  handleSetFocusSection,
+  handleSetIsInputFocused,
+  ...props
+}) => {
   // 卡片號碼
   let cardNumberRow: Array<JSX.Element> = [];
   Array.from({ length: 19 }).forEach((_, idx) => {
@@ -49,15 +57,35 @@ const Card: React.FC<CardProps> = ({ cardSide, ...props }) => {
             <img src="https://i.imgur.com/lokBLnp.png" alt="" />
           </div>
         </div>
-        <div className="card__card-number">{cardNumberRow}</div>
+        <div
+          className="card__card-number"
+          onClick={() => {
+            handleSetFocusSection("cc-number");
+            handleSetIsInputFocused(true);
+          }}
+        >
+          {cardNumberRow}
+        </div>
         <div className="card__content">
-          <div className="card__card-holder">
+          <div
+            className="card__card-holder"
+            onClick={() => {
+              handleSetFocusSection("cc-name");
+              handleSetIsInputFocused(true);
+            }}
+          >
             <div className="card__card-holder-title">Card Holder</div>
             <div className="card__card-holder-name">
               {props.cardHolder || "FULL NAME"}
             </div>
           </div>
-          <div className="card__expires">
+          <div
+            className="card__expires"
+            onClick={() => {
+              handleSetFocusSection("cc-exp");
+              handleSetIsInputFocused(true);
+            }}
+          >
             <div className="card__expires-title">Expires</div>
             <div className="card__expires-date">{cardExpirationDate}</div>
           </div>
