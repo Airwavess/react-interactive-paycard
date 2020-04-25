@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/react-interactive-paycard/static/css/main.57aa1631.chunk.css",
+    "main.css": "/react-interactive-paycard/static/css/main.00274c28.chunk.css",
     "main.js": "/react-interactive-paycard/static/js/main.fa138f0c.chunk.js",
     "main.js.map": "/react-interactive-paycard/static/js/main.fa138f0c.chunk.js.map",
     "runtime-main.js": "/react-interactive-paycard/static/js/runtime-main.c36a9f00.js",
@@ -8,15 +8,15 @@
     "static/js/2.02ced5f4.chunk.js": "/react-interactive-paycard/static/js/2.02ced5f4.chunk.js",
     "static/js/2.02ced5f4.chunk.js.map": "/react-interactive-paycard/static/js/2.02ced5f4.chunk.js.map",
     "index.html": "/react-interactive-paycard/index.html",
-    "precache-manifest.fd7e82ef570f966df98483a9cfa58619.js": "/react-interactive-paycard/precache-manifest.fd7e82ef570f966df98483a9cfa58619.js",
+    "precache-manifest.a00e3c40ab0b2df6968db29985db57fc.js": "/react-interactive-paycard/precache-manifest.a00e3c40ab0b2df6968db29985db57fc.js",
     "service-worker.js": "/react-interactive-paycard/service-worker.js",
-    "static/css/main.57aa1631.chunk.css.map": "/react-interactive-paycard/static/css/main.57aa1631.chunk.css.map",
+    "static/css/main.00274c28.chunk.css.map": "/react-interactive-paycard/static/css/main.00274c28.chunk.css.map",
     "static/js/2.02ced5f4.chunk.js.LICENSE.txt": "/react-interactive-paycard/static/js/2.02ced5f4.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.c36a9f00.js",
     "static/js/2.02ced5f4.chunk.js",
-    "static/css/main.57aa1631.chunk.css",
+    "static/css/main.00274c28.chunk.css",
     "static/js/main.fa138f0c.chunk.js"
   ]
 }
