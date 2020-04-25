@@ -1,15 +1,9 @@
-@import url("https://fonts.googleapis.com/css?family=Source+Code+Pro&display=swap");
-
-html,
-body,
-#root {
-  height: 100%;
-}
+@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro&display=swap');
 
 body {
   background: #ddeefc;
   margin: 0;
-  font-family: "Source Code Pro", monospace;
+  font-family: 'Source Code Pro', monospace;
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
