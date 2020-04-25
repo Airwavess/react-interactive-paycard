@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "8eea66af72dece4c4556fe56e738b66e",
+    "revision": "3cebe8765a7daff214ee48b267b270b8",
     "url": "/react-interactive-paycard/index.html"
   },
   {
-    "revision": "21d14283b9d920cf6365",
+    "revision": "94ae2940c45d2fc58468",
     "url": "/react-interactive-paycard/static/css/main.35bc8079.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/react-interactive-paycard/static/js/2.9ffe9969.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "21d14283b9d920cf6365",
-    "url": "/react-interactive-paycard/static/js/main.ee71edbb.chunk.js"
+    "revision": "94ae2940c45d2fc58468",
+    "url": "/react-interactive-paycard/static/js/main.816e62e6.chunk.js"
   },
   {
     "revision": "d36c214d0933da79bc43",
