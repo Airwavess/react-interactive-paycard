@@ -14,6 +14,10 @@
   gap: 20px;
   align-items: center;
 
+  @media screen and (max-width: 576px) {
+    grid-template-rows: repeat(5, 1fr);
+  }
+
   &__cc-number {
     grid-row: 1 / 1;
     grid-column: 1 / -1;
@@ -28,7 +32,11 @@
     grid-row: 3 / 3;
     grid-column: 1 / 1;
 
-    select {
+    @media screen and (max-width: 576px) {
+      grid-column: 1 / -1;
+    }
+
+    select:first-child {
       margin-right: 8px;
     }
   }
@@ -36,7 +44,11 @@
   &__cc-cvc {
     grid-row: 3 / 3;
     grid-column: 2 / 2;
-    margin-left: 8px;
+
+    @media screen and (max-width: 576px) {
+      grid-row: 4;
+      grid-column: 1 / -1;
+    }
   }
 
   &__submit-btn {
@@ -52,6 +64,11 @@
     border-radius: 5px;
     font-size: 22px;
     font-weight: 500;
+
+    @media screen and (max-width: 576px) {
+      grid-row: 5;
+      grid-column: 1 / -1;
+    }
   }
 }
 
