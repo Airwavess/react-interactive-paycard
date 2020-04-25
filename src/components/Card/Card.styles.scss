@@ -227,23 +227,26 @@
   }
 }
 
-.my-node-enter {
+.slide-up-enter {
   opacity: 0;
-  transform: translateY(15px) !important;
+  transform: translateY(15px);
 }
-.my-node-enter-active {
-}
-.my-node-enter-done {
-  transition: all 0.25s ease-in-out;
+.slide-up-enter-active {
+  opacity: 1;
+  transform: translateY(0px);
   transition-delay: 0.1s;
-  transform: translateY(0px) !important;
 }
-.my-node-exit {
-  transition: all 0.25s ease-in-out;
+.slide-up-exit {
+  opacity: 1;
   position: absolute;
 }
-.my-node-exit-active {
+.slide-up-exit-active {
   opacity: 0;
   transform: translateY(-15px);
   pointer-events: none;
+}
+
+.slide-up-enter-active,
+.slide-up-exit-active {
+  transition: all 0.25s ease-in-out;
 }

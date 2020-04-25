@@ -1,6 +1,7 @@
 import React from "react";
 import "./Card.styles.scss";
 import { CardState } from "../../pages/Paycard/Paycard.page";
+import { SwitchTransition, CSSTransition } from "react-transition-group";
 
 interface CardProps extends CardState {
   cardSide: string;
@@ -24,9 +25,22 @@ const Card: React.FC<CardProps> = ({
         <span className="card__card-number--space" key={`space-${idx}`}></span>
       );
     } else {
-      const cardNumber =
-        idx < props.cardNumber.length ? props.cardNumber[idx] : "#";
-      cardNumberRow.push(<span key={`card-number-${idx}`}>{cardNumber}</span>);
+      // cardNumberRow.push(<span key={`card-number-${idx}`}>{cardNumber}</span>);
+      cardNumberRow.push(
+        <SwitchTransition key={`card-number-${idx}`}>
+          <CSSTransition
+            key={idx < props.cardNumber.length ? props.cardNumber[idx] : "#"}
+            classNames="slide-up"
+            addEndListener={(node, done) =>
+              node.addEventListener("transitionend", done, false)
+            }
+          >
+            <span>
+              {idx < props.cardNumber.length ? props.cardNumber[idx] : "#"}
+            </span>
+          </CSSTransition>
+        </SwitchTransition>
+      );
     }
   });
 
