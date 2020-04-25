@@ -62,13 +62,18 @@ const CardForm: React.FC<CardFromProps> = ({
   const handleUpdateCardNumber = (e: React.ChangeEvent<HTMLInputElement>) => {
     const re = /^(\d{0,4}\s?){0,4}$/;
 
-    let newCardNumber = e.target.value.trim();
-    if ([5, 10, 15].includes(newCardNumber.length)) {
-      newCardNumber =
-        newCardNumber.slice(0, -1) + " " + newCardNumber.slice(-1);
+    const newCardNumber = e.target.value.replace(/\s/g, "");
+    let cardNumber = "";
+
+    for (let i = 0; i < newCardNumber.length; i++) {
+      cardNumber += newCardNumber.charAt(i);
+      if ([3, 7, 11].includes(i)) {
+        cardNumber += " ";
+      }
     }
+    cardNumber = cardNumber.trim();
     if (newCardNumber === "" || re.test(newCardNumber)) {
-      dispatch({ type: "updateCardNumber", payload: newCardNumber });
+      dispatch({ type: "updateCardNumber", payload: cardNumber });
     }
   };
 
