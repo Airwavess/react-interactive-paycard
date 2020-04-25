@@ -18,7 +18,7 @@ const Card: React.FC<CardProps> = ({ cardSide, ...props }) => {
     } else {
       const cardNumber =
         idx < props.cardNumber.length ? props.cardNumber[idx] : "#";
-      cardNumberRow.push(<span>{cardNumber}</span>);
+      cardNumberRow.push(<span key={`card-number-${idx}`}>{cardNumber}</span>);
     }
   });
 

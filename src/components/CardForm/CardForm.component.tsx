@@ -40,111 +40,107 @@ const CardForm: React.FC<CardFromProps> = ({
   };
 
   return (
-    <div className="card-form">
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="card-number">Card Number</label>
-          <input
-            type="text"
-            id="card-number"
-            autoComplete="off"
-            maxLength={19}
-            value={props.cardNumber}
-            onChange={handleUpdateCardNumber}
-            onFocus={() => {
-              handleRotateCard("front");
-              handleSetFocusSection("cc-number");
-            }}
-            onBlur={() => handleSetFocusSection("")}
-            autoFocus
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="card-holder">Card Holder</label>
-          <input
-            type="text"
-            id="card-holder"
-            autoComplete="off"
-            maxLength={20}
-            onChange={(e) => {
-              dispatch({ type: "updateCardHolder", payload: e.target.value });
-            }}
-            onFocus={() => {
-              handleRotateCard("front");
-              handleSetFocusSection("cc-name");
-            }}
-            onBlur={() => handleSetFocusSection("")}
-          />
-        </div>
+    <form onSubmit={handleSubmit} className="card-form">
+      <div className="form-group card-form__cc-number">
+        <label htmlFor="card-number">Card Number</label>
+        <input
+          type="text"
+          id="card-number"
+          autoComplete="off"
+          maxLength={19}
+          value={props.cardNumber}
+          onChange={handleUpdateCardNumber}
+          onFocus={() => {
+            handleRotateCard("front");
+            handleSetFocusSection("cc-number");
+          }}
+          onBlur={() => handleSetFocusSection("")}
+          autoFocus
+        />
+      </div>
+      <div className="form-group card-form__cc-name">
+        <label htmlFor="card-holder">Card Holder</label>
+        <input
+          type="text"
+          id="card-holder"
+          autoComplete="off"
+          maxLength={20}
+          onChange={(e) => {
+            dispatch({ type: "updateCardHolder", payload: e.target.value });
+          }}
+          onFocus={() => {
+            handleRotateCard("front");
+            handleSetFocusSection("cc-name");
+          }}
+          onBlur={() => handleSetFocusSection("")}
+        />
+      </div>
+      <div className="form-group card-form__cc-exp">
+        <label htmlFor="card-expiration-month">Expiration Date</label>
         <div className="row">
-          <div className="form-group card-form__expiration-date">
-            <label htmlFor="card-expiration-month">Expiration Date</label>
-            <div className="row">
-              <select
-                name=""
-                id="card-expiration-month"
-                defaultValue="Month"
-                onChange={(e) => {
-                  dispatch({
-                    type: "updateCardExpirationMonth",
-                    payload: e.target.value,
-                  });
-                }}
-                onFocus={() => {
-                  handleRotateCard("front");
-                  handleSetFocusSection("cc-exp");
-                }}
-                onBlur={() => handleSetFocusSection("")}
-              >
-                <option disabled>Month</option>
-                {Array.from({ length: 12 }).map((_, idx) => (
-                  <option key={idx}>{idx + 1}</option>
-                ))}
-              </select>
-              <select
-                name=""
-                id="card-expiration-year"
-                defaultValue="Year"
-                onChange={(e) => {
-                  dispatch({
-                    type: "updateCardExpirationYear",
-                    payload: e.target.value,
-                  });
-                }}
-                onFocus={() => {
-                  handleRotateCard("front");
-                  handleSetFocusSection("cc-exp");
-                }}
-                onBlur={() => handleSetFocusSection("")}
-              >
-                <option disabled>Year</option>
-                {Array.from({ length: 12 }).map((_, idx) => (
-                  <option key={idx}>{2020 + idx}</option>
-                ))}
-              </select>
-            </div>
-          </div>
-          <div className="form-group card-form__card-cvC">
-            <label htmlFor="card-cvC">CVC</label>
-            <input
-              type="text"
-              id="card-cvC"
-              maxLength={3}
-              value={props.cardCVC}
-              onChange={handleUpdateCardCVC}
-              onFocus={() => {
-                handleRotateCard("back");
-                handleSetFocusSection("cc-cvc");
-              }}
-              onBlur={() => handleSetFocusSection("")}
-            />
-          </div>
+          <select
+            name=""
+            id="card-expiration-month"
+            defaultValue="Month"
+            onChange={(e) => {
+              dispatch({
+                type: "updateCardExpirationMonth",
+                payload: e.target.value,
+              });
+            }}
+            onFocus={() => {
+              handleRotateCard("front");
+              handleSetFocusSection("cc-exp");
+            }}
+            onBlur={() => handleSetFocusSection("")}
+          >
+            <option disabled>Month</option>
+            {Array.from({ length: 12 }).map((_, idx) => (
+              <option key={idx}>{idx + 1}</option>
+            ))}
+          </select>
+          <select
+            name=""
+            id="card-expiration-year"
+            defaultValue="Year"
+            onChange={(e) => {
+              dispatch({
+                type: "updateCardExpirationYear",
+                payload: e.target.value,
+              });
+            }}
+            onFocus={() => {
+              handleRotateCard("front");
+              handleSetFocusSection("cc-exp");
+            }}
+            onBlur={() => handleSetFocusSection("")}
+          >
+            <option disabled>Year</option>
+            {Array.from({ length: 12 }).map((_, idx) => (
+              <option key={idx}>{2020 + idx}</option>
+            ))}
+          </select>
         </div>
-        <button type="submit" className="card-form__submit-btn">
-          Submit
-        </button>
-      </form>
-    </div>
+      </div>
+      <div className="form-group card-form__cc-cvc">
+        <label htmlFor="card-cvC">CVC</label>
+        <input
+          type="text"
+          id="card-cvc"
+          maxLength={3}
+          value={props.cardCVC}
+          onChange={handleUpdateCardCVC}
+          onFocus={() => {
+            handleRotateCard("back");
+            handleSetFocusSection("cc-cvc");
+          }}
+          onBlur={() => handleSetFocusSection("")}
+        />
+      </div>
+      <button type="submit" className="card-form__submit-btn">
+        Submit
+      </button>
+    </form>
   );
 };
 
