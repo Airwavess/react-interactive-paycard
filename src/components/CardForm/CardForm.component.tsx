@@ -50,7 +50,10 @@ const CardForm: React.FC<CardFromProps> = ({
   const setInputRefFocus = useCallback(
     (focusSection: string) => {
       if (!focusSection) return;
-      const key = toRefKey(focusSection);
+      let key = toRefKey(focusSection);
+      if (key === "ccExpRef") {
+        key = "ccExpMonthRef";
+      }
       inputRefs[key]?.current.focus();
     },
     [inputRefs]
