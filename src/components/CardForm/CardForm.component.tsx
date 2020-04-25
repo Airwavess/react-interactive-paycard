@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useCallback, useMemo } from "react";
 import "./CardForm.styles.scss";
 import { ReducerAction, CardState } from "../../pages/Paycard/Paycard.page";
+import { toRefKey } from "../../utils";
 
 interface CardFromProps extends CardState {
   handleRotateCard: (side: string) => void;
@@ -49,15 +50,7 @@ const CardForm: React.FC<CardFromProps> = ({
   const setInputRefFocus = useCallback(
     (focusSection: string) => {
       if (!focusSection) return;
-      if (focusSection === "cc-exp") focusSection = "ccExpMonth";
-      let key = focusSection.split("-")[0];
-
-      for (let i = 1; i < focusSection.split("-").length; i++) {
-        const a = focusSection.split("-")[1].substring(0, 1).toUpperCase();
-        const b = focusSection.split("-")[1].substring(1);
-        key = `${key}${a}${b}`;
-      }
-      key = `${key}Ref`;
+      const key = toRefKey(focusSection);
       inputRefs[key]?.current.focus();
     },
     [inputRefs]

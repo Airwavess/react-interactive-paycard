@@ -48,7 +48,7 @@
       background: rgba(6, 2, 29, 0.45);
       width: 100%;
       height: 100%;
-      content: '';
+      content: "";
       position: absolute;
       left: 0;
       top: 0;
@@ -56,9 +56,15 @@
   }
 
   &__front {
+    .card__wrapper {
+      padding: 25px 15px;
+      height: 100%;
+    }
+
     .card__top {
       height: 45px;
-      margin: 20px;
+      margin-bottom: 20px;
+      padding: 0 10px;
       display: flex;
       justify-content: space-between;
     }
@@ -81,11 +87,15 @@
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      margin: 20px 0;
-      padding: 0 20px;
+      margin-bottom: 20px;
+      padding: 10px 15px;
       flex: 1;
       z-index: 3;
       cursor: pointer;
+
+      @media screen and (max-width: 480px) {
+        margin-bottom: 15px;
+      }
 
       span {
         width: 16px;
@@ -121,7 +131,7 @@
     .card__card-holder,
     .card__expires {
       color: #fff;
-      margin: 20px;
+      padding: 10px 15px;
       text-align: left;
       cursor: pointer;
 
@@ -178,6 +188,10 @@
         color: #fff;
         text-align: right;
         padding-bottom: 8px;
+
+        span {
+          padding: 4px 6px;
+        }
       }
 
       &-number {
@@ -213,31 +227,7 @@
     height: 100%;
     opacity: 0;
 
-    &--cc-number {
-      width: 360px;
-      height: 47px;
-      transform: translate(15px, 114px);
-      opacity: 1;
-    }
-
-    &--cc-name {
-      width: 315px;
-      height: 57px;
-      transform: translate(15px, 200px);
-      opacity: 1;
-    }
-
-    &--cc-exp {
-      width: 80px;
-      height: 57px;
-      transform: translate(340px, 200px);
-      opacity: 1;
-    }
-
-    &--cc-cvc {
-      width: 44px;
-      height: 26px;
-      transform: translate(374px, 108px);
+    &--active {
       opacity: 1;
     }
   }
