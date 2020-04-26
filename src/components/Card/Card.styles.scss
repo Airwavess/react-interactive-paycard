@@ -2,12 +2,13 @@
   max-width: 430px;
   width: 100%;
   height: 270px;
-  position: relative;
   margin-bottom: -130px;
   display: flex;
   flex-direction: column;
   transition: transform 0.8s cubic-bezier(0.71, 0.03, 0.56, 0.85);
   transform-style: preserve-3d;
+  position: sticky;
+  top: 0;
 
   @media screen and (max-width: 480px) {
     max-width: 310px;
@@ -39,6 +40,10 @@
     overflow: hidden;
     z-index: 1;
 
+    @media screen and (max-width: 480px) {
+      box-shadow: 0 10px 30px 0 rgba(14, 42, 90, 0.55);
+    }
+
     img {
       height: 100%;
       width: 100%;
@@ -69,6 +74,7 @@
       justify-content: space-between;
 
       @media screen and (max-width: 480px) {
+        height: 40px;
         margin-bottom: 25px;
       }
     }
@@ -76,19 +82,11 @@
     .card__chip-icon,
     .card__visa-icon {
       z-index: 2;
-      display: flex;
+      height: 100%;
+
       img {
         height: 100%;
       }
-    }
-    .card__chip-icon {
-      margin-right: auto;
-    }
-
-    .card__visa-icon {
-      position: relative;
-      justify-content: flex-end;
-      margin-left: auto;
     }
 
     .card__card-number {
