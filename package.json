@@ -43,7 +43,7 @@
     "@types/react-dom": "^16.9.0",
     "@types/react-transition-group": "^4.2.4",
     "gh-pages": "^2.2.0",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "typescript": "~3.7.2"
   }
 }
